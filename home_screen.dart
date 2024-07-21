@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'new_activity_screen.dart';
+import 'activity_detail_screen.dart'; // อย่าลืมเพิ่มการนำเข้าหน้าจอ ActivityDetailScreen
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,13 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
         _activities.map((activity) => json.encode(activity)).toList());
   }
 
-  void _addActivity(String name, String note, DateTime dateTime) {
+  void _addActivity(String name, String note, DateTime dateTime, [int? index]) {
     setState(() {
-      _activities.add({
-        'name': name,
-        'note': note,
-        'dateTime': dateTime.toIso8601String(),
-      });
+      if (index == null) {
+        _activities.add({
+          'name': name,
+          'note': note,
+          'dateTime': dateTime.toIso8601String(),
+        });
+      } else {
+        _activities[index] = {
+          'name': name,
+          'note': note,
+          'dateTime': dateTime.toIso8601String(),
+        };
+      }
     });
     _saveActivities();
   }
@@ -112,7 +121,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         dateTime.minute.toString().padLeft(2, '0'),
                   ),
                   onTap: () {
-                    // Add code here to view or edit the activity
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ActivityDetailScreen(
+                          activity: activity,
+                          index: index,
+                          onSave: _addActivity,
+                        ),
+                      ),
+                    );
                   },
                 );
               },
