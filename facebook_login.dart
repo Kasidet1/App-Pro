@@ -28,11 +28,17 @@ class FacebookLogin extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await authService.signInWithEmail(
-                  emailController.text,
-                  passwordController.text,
-                );
-                Navigator.pushReplacementNamed(context, '/home');
+                if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please fill in all fields')),
+                  );
+                } else {
+                  await authService.signInWithEmail(
+                    emailController.text,
+                    passwordController.text,
+                  );
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
               },
               child: Text('Login'),
             ),
