@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/Resister');
+                Navigator.pushNamed(context, '/Register');
               },
               child: Text('Register'),
             ),
