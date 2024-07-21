@@ -10,7 +10,7 @@ class FacebookLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<MockAuthService>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Facebook')),
+      appBar: AppBar(title: Text('Facebook Login')), // เพิ่ม "Login" เพื่อความชัดเจน
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -35,6 +35,13 @@ class FacebookLogin extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/home');
               },
               child: Text('Login'),
+            ),
+            SizedBox(height: 10), // เพิ่มระยะห่างระหว่างปุ่ม
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/login'); // เพิ่มการนำทางกลับไปหน้า Login
+              },
+              child: Text('Cancel'),
             ),
           ],
         ),
