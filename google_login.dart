@@ -28,18 +28,24 @@ class GoogleLogin extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await authService.signInWithEmail(
-                  emailController.text,
-                  passwordController.text,
-                );
-                Navigator.pushReplacementNamed(context, '/home');
+                if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please fill in all fields')),
+                  );
+                } else {
+                  await authService.signInWithEmail(
+                    emailController.text,
+                    passwordController.text,
+                  );
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
               },
               child: Text('Login'),
             ),
-            SizedBox(height: 10),  // เพิ่มระยะห่างระหว่างปุ่ม
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login');  // เพิ่มการนำทางกลับไปหน้า Login
+                Navigator.pushReplacementNamed(context, '/login');
               },
               child: Text('Cancel'),
             ),
