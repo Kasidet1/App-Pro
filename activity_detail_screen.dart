@@ -4,8 +4,9 @@ class ActivityDetailScreen extends StatefulWidget {
   final Map<String, dynamic> activity;
   final int index;
   final Function(String, String, DateTime, int) onSave;
+  final Function(int) onDelete;
 
-  ActivityDetailScreen({required this.activity, required this.index, required this.onSave});
+  ActivityDetailScreen({required this.activity, required this.index, required this.onSave, required this.onDelete});
 
   @override
   _ActivityDetailScreenState createState() => _ActivityDetailScreenState();
@@ -22,6 +23,26 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
     _nameController = TextEditingController(text: widget.activity['name']);
     _noteController = TextEditingController(text: widget.activity['note']);
     _dateTime = DateTime.parse(widget.activity['dateTime']);
+  }
+
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _dateTime,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != _dateTime) {
+      setState(() {
+        _dateTime = DateTime(
+          picked.year,
+          picked.month,
+          picked.day,
+          _dateTime.hour,
+          _dateTime.minute,
+        );
+      });
+    }
   }
 
   @override
@@ -41,6 +62,23 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
               decoration: InputDecoration(labelText: 'Note'),
             ),
             SizedBox(height: 20),
+            Row(
+              children: [
+                Text(
+                  "${_dateTime.toLocal()}".split(' ')[0] +
+                      " " +
+                      _dateTime.hour.toString().padLeft(2, '0') +
+                      ":" +
+                      _dateTime.minute.toString().padLeft(2, '0'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: _selectDate,
+                  child: Text('Select Date'),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 widget.onSave(
@@ -52,6 +90,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 Navigator.pop(context);
               },
               child: Text('Save'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                widget.onDelete(widget.index);
+                Navigator.pop(context);
+              },
+              child: Text('Delete'),
+              style: ElevatedButton.styleFrom(backgroundColor:  Colors.red),
             ),
           ],
         ),
