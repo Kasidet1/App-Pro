@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/facebook_login.dart';
 import 'package:flutter_application_1/screens/google_login.dart';
+import 'package:flutter_application_1/screens/resister.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
+        '/Resister': (context) => Resister(),
         '/Googlelogin': (context) => GoogleLogin(),
         '/FacebookLogin': (context) => FacebookLogin(),
         '/pin': (context) => PinInputScreen(),
