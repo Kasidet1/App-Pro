@@ -26,7 +26,7 @@ class Resister extends StatelessWidget {
               obscureText: true,
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'ComfirmPassword'),
+              decoration: InputDecoration(labelText: 'ConfirmPassword'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -37,7 +37,7 @@ class Resister extends StatelessWidget {
                 );
                 Navigator.pushReplacementNamed(context, '/home');
               },
-              child: Text('Login'),
+              child: Text('Resister'),
             ),
           ],
         ),
