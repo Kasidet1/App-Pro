@@ -76,37 +76,42 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Stack(
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: FutureBuilder<String?>(
-                future: _getAccountName(),
-                builder: (context, snapshot) {
-                  return Text(
-                    'Account: ${snapshot.data ?? ''}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+            ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: Icon(Icons.account_circle, color: Colors.white, size: 40),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
                     ),
-                  );
+                  ),
+                ),
+                ListTile(
+                  title: Text('About'),
+                  onTap: () {
+                    // Navigate to about screen
+                  },
+                ),
+              ],
+            ),
+            Positioned(
+              right: 16,
+              bottom: 16,
+              child: IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  // Navigate to settings screen
                 },
               ),
-            ),
-            ListTile(
-              title: Text('Settings'),
-              onTap: () {
-                // Navigate to settings screen
-              },
-            ),
-            ListTile(
-              title: Text('About'),
-              onTap: () {
-                // Navigate to about screen
-              },
             ),
           ],
         ),
@@ -118,29 +123,35 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 final activity = _activities[index];
                 final dateTime = DateTime.parse(activity['dateTime']);
-                return ListTile(
-                  title: Text(activity['name']),
-                  subtitle: Text(activity['note']),
-                  trailing: Text(
-                    "${dateTime.toLocal()}".split(' ')[0] +
-                        " " +
-                        dateTime.hour.toString().padLeft(2, '0') +
-                        ":" +
-                        dateTime.minute.toString().padLeft(2, '0'),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ActivityDetailScreen(
-                          activity: activity,
-                          index: index,
-                          onSave: _addActivity,
-                          onDelete: _deleteActivity,
+                return Card(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  elevation: 4,
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(16.0),
+                    title: Text(activity['name']),
+                    subtitle: Text(activity['note']),
+                    trailing: Text(
+                      "${dateTime.toLocal()}".split(' ')[0] +
+                          " " +
+                          dateTime.hour.toString().padLeft(2, '0') +
+                          ":" +
+                          dateTime.minute.toString().padLeft(2, '0'),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ActivityDetailScreen(
+                            activity: activity,
+                            index: index,
+                            onSave: _addActivity,
+                            onDelete: _deleteActivity,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               },
             ),
