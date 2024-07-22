@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: () {
-                  // Navigate to settings screen
+                  Navigator.pushNamed(context, '/settings');
                 },
               ),
             ),
