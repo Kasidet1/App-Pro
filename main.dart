@@ -92,15 +92,7 @@ class MyApp extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         ),
       ),
-      home: Consumer<MockAuthService>(
-        builder: (context, authService, _) {
-          if (authService.user == null) {
-            return LoginScreen();
-          } else {
-            return HomeScreen();
-          }
-        },
-      ),
+      home: HomeScreen(),
       routes: {
         '/home': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
