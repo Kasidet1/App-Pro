@@ -129,15 +129,35 @@ class _PinCodeWidgetState extends State<PinInputScreen> {
                 ),
               ),
 
-            /// 0 digit with backspace button
+            /// 0 digit with backspace button and Reset button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: Container()), // Empty space before the 0 button
-                  Center(child: numButton(0)), // Centered 0 button
-                  Expanded(child: Container()), // Empty space after the 0 button
+                  // Reset button
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        enteredPin = '';
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red, // Background color
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(3),
+                      minimumSize: Size(60, 60), // Button size
+                    ),
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                  ),
+                  Spacer(), // Empty space before the 0 button
+                  numButton(0),
+                  Spacer(), // Empty space after the 0 button
                   TextButton(
                     onPressed: () {
                       setState(
@@ -156,22 +176,6 @@ class _PinCodeWidgetState extends State<PinInputScreen> {
                     ),
                   ),
                 ],
-              ),
-            ),
-
-            /// Reset button
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  enteredPin = '';
-                });
-              },
-              child: const Text(
-                'Reset',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
               ),
             ),
           ],
