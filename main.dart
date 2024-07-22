@@ -8,10 +8,10 @@ import 'screens/login_screen.dart';
 import 'screens/pin_input_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/activities_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/security_screen.dart';
 import 'services/mock_auth_service.dart';
 import 'screens/new_activity_screen.dart' as new_activity;
-import 'package:shimmer/shimmer.dart';
-import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(
@@ -105,123 +105,9 @@ class MyApp extends StatelessWidget {
               onAdd: (name, note, dateTime) {},
             ),
         '/activities': (context) => ActivitiesScreen(),
+        '/settings': (context) => SettingsScreen(), // เพิ่มนี้
+        '/security': (context) => SecurityScreen(), // เพิ่มนี้
       },
-    );
-  }
-}
-
-class WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height * 0.75);
-    var firstControlPoint = Offset(size.width / 4, size.height);
-    var firstEndPoint = Offset(size.width / 2.25, size.height * 0.85);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
-
-    var secondControlPoint = Offset(size.width * 0.75, size.height * 0.7);
-    var secondEndPoint = Offset(size.width, size.height * 0.85);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
-
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-class GradientButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final Widget child;
-
-  const GradientButton({
-    Key? key,
-    required this.onPressed,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFB0BEC5), Color(0xFFCFD8DC)], // Light Grey Blue to Very Light Blue
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
-        child: child,
-      ),
-    );
-  }
-}
-
-class ExampleScreen extends StatelessWidget {
-  const ExampleScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFECEFF1), Color(0xFFF3F4F6)], // Very Light Grey to Almost White
-          ),
-        ),
-        child: Column(
-          children: [
-            ClipPath(
-              clipper: WaveClipper(),
-              child: Container(
-                color: Theme.of(context).primaryColor,
-                height: 200,
-              ),
-            ),
-            GradientButton(
-              onPressed: () {},
-              child: const Text('Gradient Button'),
-            ),
-            Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: ListTile(
-                leading: const CircleAvatar(backgroundColor: Colors.white),
-                title: Container(
-                  width: double.infinity,
-                  height: 16,
-                  color: Colors.white,
-                ),
-                subtitle: Container(
-                  width: double.infinity,
-                  height: 12,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Lottie.asset(
-              'assets/loading_animation.json',
-              width: 200,
-              height: 200,
-              fit: BoxFit.fill,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
